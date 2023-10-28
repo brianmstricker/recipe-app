@@ -11,6 +11,9 @@ import MainLayout from "./layouts/MainLayout.jsx";
 import Home from "./pages/Home.jsx";
 import { StyledEngineProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import axios from "axios";
+
+axios.defaults.baseURL = "http://localhost:3000";
 
 const router = createBrowserRouter(
  createRoutesFromElements(

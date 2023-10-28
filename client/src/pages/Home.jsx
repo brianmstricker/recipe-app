@@ -1,6 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { API_ID } from "../util";
-import { API_KEY } from "../util";
 import axios from "axios";
 import RecipeCard from "../components/RecipeCard";
 import { Typography } from "@mui/material";
@@ -8,9 +6,8 @@ import { Typography } from "@mui/material";
 const Home = () => {
  // const queryClient = useQueryClient();
  async function fetchRecipes() {
-  const res = await axios.get(
-   `https://api.edamam.com/api/recipes/v2?type=public&app_id=${API_ID}&app_key=${API_KEY}&cuisineType=American`
-  );
+  // TODO - fetch recipes from API
+  const res = await axios.get();
   return res.data.hits;
  }
  const { isPending, isError, data, error } = useQuery({
