@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import RecipeCard from "../components/RecipeCard";
-import { Typography } from "@mui/material";
+import { Skeleton } from "@mui/material";
 
 const Home = () => {
- // const queryClient = useQueryClient();
  async function fetchRecipes() {
-  // TODO - fetch recipes from API
-  const res = await axios.get();
+  const res = await axios.get("/recipes");
+  console.log(res);
   return res.data.hits;
  }
  const { isPending, isError, data, error } = useQuery({
@@ -15,7 +14,24 @@ const Home = () => {
   queryFn: fetchRecipes,
  });
  if (isPending) {
-  return <span>Loading...</span>;
+  return (
+   <>
+    <div>
+     <Skeleton />
+    </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto py-8">
+     {Array.from({ length: 20 }).map((_, i) => (
+      <Skeleton
+       key={i}
+       variant="rounded"
+       height={280}
+       className="mx-auto w-full max-w-[345px] bg-gray-200/90"
+       animation="wave"
+      />
+     ))}
+    </div>
+   </>
+  );
  }
  if (isError) {
   return <span>Error: {error.message}</span>;
@@ -24,10 +40,7 @@ const Home = () => {
  const recipes = data?.map((recipe) => recipe.recipe);
  return (
   <>
-   <Typography variant="h2" component="h1" textAlign="center">
-    Recipes
-   </Typography>
-   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto px-4 py-8">
+   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto py-8">
     {recipes.map((recipe) => (
      <RecipeCard recipe={recipe} key={recipe.label} />
     ))}

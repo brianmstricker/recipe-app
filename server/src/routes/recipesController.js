@@ -7,8 +7,8 @@ const recipesController = (fasitfy, options, done) => {
  fasitfy.get("/", async (req, res) => {
   const cachedRecipes = cache.get("recipes");
   if (cachedRecipes) {
-   console.log("from cache");
-   res.send({ data: cachedRecipes });
+   console.log("FROM CACHE");
+   res.send(cachedRecipes);
    return;
   }
   const data = await axios.get(
@@ -16,7 +16,7 @@ const recipesController = (fasitfy, options, done) => {
   );
   console.log(data.data);
   cache.set("recipes", data.data);
-  res.send({ data: data.data });
+  res.send(data.data);
  });
  done();
 };
